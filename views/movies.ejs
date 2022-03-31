@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang=fr>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="../public/style.css">
+
+    <title>Movies !</title>
+</head>
+<body>
+    <%- include('partials/header') %>
+
+
+    <h1><%- title %></h1>
+    <hr><br>
+    <div class="m-lg-4 french-movies">
+        <% for(movie of movies) {%>
+            <div>- <%- movie.title %> (<%- movie.year %>)</div>
+        <% } %>
+    </div>
+    <br><br><hr><br><br>
+    <div class="text-center">
+        <h4 class="mb-lg-5">Envie d'ajouter un film ? C'est par ici...</h4>
+        <form action="/movies" method="post">
+            <label for="movietitle">Titre du film</label>
+            <input type="text" name="movietitle" id="movietitle">
+            <label for="movieyear">Année du film</label>
+            <input type="text" name="movieyear" id="movieyear">
+            <!-- <button type="submit">Ajouter</button> -->
+            <button type="submit" class="btn btn-secondary">Ajouter</button>
+        </form>
+    </div>
+    <%- include('partials/footer') %>
+
+    <script>
+        // Récupère le formulaire :  (on utilise FETCH en POST )
+        const form = document.querySelector('form');
+        // On écoute ensuite l'évennement SUBMIT :
+        // Quand il se déclenche, on déclenche la fonction "addMovie"
+        form.addEventListener('submit', addMovie);
+
+        function addMovie(event) {
+            event.preventDefault();
+
+            if(fetch) {
+                fetch('/movies', {
+                    method: 'POST',
+                    body: new FormData(form)
+                })
+                    .then(checkStatus)
+                    .catch(function (error) {
+                        console.error('request failed', error);
+                    })
+            } else {
+                // jQuery, XHR    (FAIRE RECHERCHES)
+            }
+        }
+
+        function checkStatus(response) {
+            if(response.status >= 200 && response.status < 300) {
+                let newMovieDiv = document.createElement('div');
+                const movietitle = document.getElementById('movietitle').value;
+                const movieyear = document.getElementById('movieyear').value;
+                newMovieDiv.innerHTML = ` ${movietitle} (${movieyear})`;
+                document.querySelector('.french-movies').appendChild(newMovieDiv);
+                form.reset();
+            }
+        }
+    </script>
+</body>
+</html>

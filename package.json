@@ -1,0 +1,21 @@
+{
+  "name": "expressmovies_udemystyle",
+  "version": "1.0.0",
+  "description": "Tutoriel Udemy - Application pour fans de cinéma.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js"
+  },
+  "author": "Morgan NOTT",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "bootstrap": "^4.6.0",
+    "bootstrap-icons": "^1.3.0",
+    "express": "^4.17.1",
+    "jquery": "^3.5.1",
+    "popper.js": "^1.16.1"
+  }
+}
